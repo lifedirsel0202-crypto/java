@@ -8,7 +8,7 @@ public class TvRemoteC extends BasicRemoteC {
 	Scanner sc= new Scanner(System.in);
 	
 		TvRemoteC ac = new TvRemoteC();
-		
+		 
 		
 
 		}
