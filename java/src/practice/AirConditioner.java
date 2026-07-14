@@ -6,7 +6,7 @@ public class AirConditioner extends BasicRemoteC {
 	
 	}
 	
-	int cha = 10;
+	int cha = 10; 
 	void channel() {
 		System.out.println("현재 채널은"+ cha +"입니다.");
 	
