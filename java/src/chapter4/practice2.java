@@ -29,6 +29,7 @@ public class practice2 {
 		 */
 		
 		System.out.println("d1 : " + d1);
+		
 		System.out.println("d2 : " + d2);
 		System.out.println("d3 : " + d3);
 		System.out.println("d4 : " + d4);

@@ -9,20 +9,37 @@ public class practice3 {
 			}
 			System.out.println();
 		}
-		for (int ii=5;ii>=1;ii++) {
-			for (int jj=1;jj>=ii;jj++) {	
+		System.out.println("----------------------------");
+		for (int ii=5;ii>=1;ii--) {
+			for (int jj=1;jj<=ii;jj++) {	
 				System.out.print("*");
 			}
 			
-		System.out.println("*");{
+		System.out.println("");{
 		}
 		}
-//			for(int i =5;i>=1; ++i) {
-//				for(int j= 5;j<=i;++j){
-//					System.out.print("*");
-//				}
-//				System.out.println();
-	//		}
+		System.out.println("----------------------------");
+		
+		for (int ii=1;ii<=5;ii++) {
+			for (int jj=1;jj<=ii;jj++) {	
+				System.out.print("*");
+			}
+			
+		System.out.println("");{
+
+		}
+		
+		for (int s=1;s<=5;ii++) {
+		
+		}
+		
+
+		}
+		
 	}
-}
+	}
+
+
+
+
 
