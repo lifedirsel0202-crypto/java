@@ -1,0 +1,70 @@
+drop table tbl_product;
+
+create table tbl_category(
+cat_code char(2) not null,
+cat_name varchar(20) not null,
+cat_manager varchar(14),
+primary key(cat_code));
+
+insert into tbl_category values('10','식품','김식품');
+insert into tbl_category values('20','생활용품','박생활');
+insert into tbl_category values('30','문구','이문구');
+
+create table tbl_product(
+prod_code char(5) not null,
+prod_name varchar(30) not null,
+cat_code char(2) not null,
+unit_price integer(8) not null,
+primary key(prod_code),
+foreign key(cat_code) references tbl_category(cat_code));
+
+insert into tbl_product values('p1001','원두커피','10',12000);
+insert into tbl_product values('p1002','과일주스','10',3500);
+insert into tbl_product values('p2001','세탁세제','20',8900);
+insert into tbl_product values('p2002','주방세제','20',4800);
+insert into tbl_product values('p3001','볼펜세트','30',6000);
+
+create table tbl_SALE(
+SALE_NO CHAR(5)NOT NULL,
+SALE_DATE CHAR(8)NOT NULL,
+PROD_CODE CHAR(5)NOT NULL,
+SALE_QTY INTEGER(4)NOT NULL,
+BUYER_NAME VARCHAR(20)NOT NULL,
+PRIMARY KEY(SALE_NO),
+FOREIGN KEY(PROD_CODE) REFERENCES tbl_product(prod_code));
+
+INSERT INTO tbl_SALE VALUES('S0001','20260901','P1001',2,'김민수');
+INSERT INTO tbl_SALE VALUES('S0002','20260901','P1002',2,'김민수');
+INSERT INTO tbl_SALE VALUES('S0003','20260902','P2001',2,'김민수');
+INSERT INTO tbl_SALE VALUES('S0004','20260902','P2002',2,'김민수');
+INSERT INTO tbl_SALE VALUES('S0005','20260903','P3001',2,'김민수');
+INSERT INTO tbl_SALE VALUES('S0006','20260903','P1001',2,'김민수');
+INSERT INTO tbl_SALE VALUES('S0007','20260904','P2001',2,'김민수');
+INSERT INTO tbl_SALE VALUES('S0008','20260904','P3001',2,'김민수');
+
+-- 판매금액, 판매번호, 상품명, 분류명, 판매수량, 단가, 판매금액, 구매자명
+SELECT SALE_DATE, SALE_NO, PROD_NAME, CAT_NAME, SALE_QTY, UNIT_PRICE, BUYER_NAME
+FROM TBL_SALE TS 
+LEFT OUTER JOIN TBL_PRODUCT TP ON TS.PROD_CODE = TP.PROD_CODE
+LEFT OUTER JOIN tbl_category TC ON TP.CAT_CODE=TC.CAT_CODE
+ORDER BY SALE_DATE, SALE_NO;
+
+-- 분류코드 분류명 판매건수 총판매수량 총판매금액
+select tc.cat_code,tc.cat_name, ts.sale_qty
+from tbl_sale ts left outer join tbl_product tp on  tp.prod_code= ts.prod_code
+						left outer join tbl_category tc on tp.cat_code= tc.cat_code
+group by tc.cat_code,tc.cat_name,ts.sale_qty;
+
+update tbl_sale set sale_qty=4 where sale_no='s0002';
+update tbl_sale set sale_qty=3 where sale_no='s0003';
+update tbl_sale set sale_qty=5 where sale_no='s0005';
+update tbl_sale set sale_qty=1 where sale_no='s0006';
+update tbl_sale set sale_qty=1 where sale_no='s0007';
+
+-- 분류코드 , 분류명, 판매건수, 총판매수량, 총판매금액
+select tc.cat_code, tc.cat_name,count(tc.cat_code),sum(sale_qty),sum(unit_price*sale_qty)
+from tbl_category tc left outer join tbl_product tp on  tp.cat_code= tc.cat_code
+						left outer join tbl_sale ts on tp.prod_code= ts.prod_code
+group by tc.cat_code, tc.cat_name with rollup
+order by tc.cat_code is null;
+	
